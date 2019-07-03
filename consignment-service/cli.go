@@ -53,15 +53,12 @@ func main() {
 		log.Fatalf("Could not greet: %v", err)
 	}
 	log.Printf("Created: %t", r.Created)
-}
 
-Now create a consignment (consignment-cli/consignment.json):
-
-{
-  "description": "This is a test consignment",
-  "weight": 550,
-  "containers": [
-    { "customer_id": "cust001", "user_id": "user001", "origin": "Manchester, United Kingdom" }
-  ],
-  "vessel_id": "vessel001"
+	getAll, err := client.GetConsignments(context.Background(), &pb.GetRequest{})
+	if err != nil {
+		log.Fatalf("Could not list consignments: %v", err)
+	}
+	for _, v := range getAll.Consignments {
+		log.Println(v)
+	}
 }
